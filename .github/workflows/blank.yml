@@ -49,14 +49,26 @@ jobs:
             echo "Changed files:"
             cat changes.txt
 
-     
+
+      - name: Make clone dir
+        run: |
+                CLONE_DIRECTORY1=$(mktemp -d)
+      - name: Checkout private tools
+            - uses: actions/checkout@v3
+              with:
+                repository: piotrblajdo/destimation.git
+                token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+                path: $CLONE_DIRECTORY
 
       - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
             # Setup git
             CLONE_DIRECTORY=$(mktemp -d)
-            git clone "https://piotrblajdo:${{ secrets.GITHUB_TOKEN }}@github.com/piotrblajdo/destimation" "$CLONE_DIRECTORY"
+            git config --global user.email "$git_user_email"
+            git config --global user.name "$git_user_name"
+            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+            git clone "https://piotrblajdo:${{ secrets.GH_PAT }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
         env:
           git_user_email: piotrblajdo@gmail.com
@@ -73,13 +85,3 @@ jobs:
 #          echo Add other actions to build,
 #          echo test, and deploy your project.
 
-#
-# - name: Make clone dir
-#        run: |
-#           CLONE_DIRECTORY1=$(mktemp -d)
-#      - name: Checkout private tools
-#      - uses: actions/checkout@v3
-#        with:
-#          repository: my-org/my-private-tools
-#          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-#          path: my-tools
