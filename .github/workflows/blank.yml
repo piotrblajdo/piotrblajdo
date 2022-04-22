@@ -56,7 +56,7 @@ jobs:
             CLONE_DIRECTORY=$(mktemp -d)
             git config --global user.email "piotrblajdo@gmail.com"
             git config --global user.name "piotrblajdo"
-            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+#            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
 #        env:
