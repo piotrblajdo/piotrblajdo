@@ -48,34 +48,20 @@ jobs:
             done
             echo "Changed files:"
             cat changes.txt
-      #            ls -la "$CLONE_DIRECTORY"
-      - name: Clone dir
-        run: |
-          CLONE_DIRECTORY=$(mktemp -d)
-
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-            repository: piotrblajdo/destimation.git
-            path: $CLONE_DIRECTORY
       - name: Clone destmation repository
         run: |
-              ls -la "$CLONE_DIRECTORY"
-#      - name: Clone destmation repository
-#        run: |
-#            echo "##### Cloning destination Github repository #####"
-#            # Setup git
-#            CLONE_DIRECTORY=$(mktemp -d)
-#            git config --global user.email "piotrblajdo@gmail.com"
-#            git config --global user.name "piotrblajdo"
-#            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-#            git clone https://piotrblajdo:${{ inputs.access_token }}@github.com/piotrblajdo/destimation.git "$CLONE_DIRECTORY"
-#            ls -la "$CLONE_DIRECTORY"
-#
-#        env:
-#          git_user_email: piotrblajdo@gmail.com
-#          git_user_name: piotrblajdo
-
+            echo "##### Cloning destination Github repository #####"
+            # Setup git
+            CLONE_DIRECTORY=$(mktemp -d)
+            git config --global user.email "$git_user_email"
+            git config --global user.name "$git_user_name"
+            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+            git clone "https://${{ inputs.access_token }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+            ls -la "$CLONE_DIRECTORY"
+        env:
+          git_user_email: piotrblajdo@gmail.com
+          git_user_name: piotrblajdo
+          git_dest_token: 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
 
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
