@@ -58,7 +58,7 @@ jobs:
         with:
           repository: piotrblajdo/destimation.git
           token: ${{ secrets.GITHUB_TOKEN}} # `GH_PAT` is a secret that contains your PAT
-          path: $CLONE_DIRECTORY1
+          path: my-tools
 
       - name: Clone destmation repository
         run: |
