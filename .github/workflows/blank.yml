@@ -24,9 +24,10 @@ jobs:
     steps:
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        -
+
       - name: Upload file with changes to releases
           run: |
             PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
