@@ -49,16 +49,16 @@ jobs:
             echo "Changed files:"
             cat changes.txt
 
-
       - name: Make clone dir
         run: |
                 CLONE_DIRECTORY1=$(mktemp -d)
+
       - name: Checkout private tools
-            - uses: actions/checkout@v3
-              with:
-                repository: piotrblajdo/destimation.git
-                token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-                path: $CLONE_DIRECTORY
+      - uses: actions/checkout@v3
+        with:
+          repository: piotrblajdo/destimation.git
+          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+          path: $CLONE_DIRECTORY
 
       - name: Clone destmation repository
         run: |
