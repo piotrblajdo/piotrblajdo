@@ -37,7 +37,6 @@ jobs:
       - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
-          
             CLONE_DIRECTORY=$(mktemp -d)
             git config --global user.email "piotrblajdo@gmail.com"
             git config --global user.name "piotrblajdo"
