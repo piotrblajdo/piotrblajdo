@@ -56,7 +56,7 @@ jobs:
       - name: Checkout private tools
         uses: actions/checkout@v3
         with:
-          repository: piotrblajdo/destimation.git
+          repository: piotrblajdo/destimation
           token: ${{ secrets.GITHUB_TOKEN}} # `GH_PAT` is a secret that contains your PAT
           path: my-tools
           ref: my-branch
