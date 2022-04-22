@@ -25,7 +25,6 @@ jobs:
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"
 
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       - name: Upload file with changes to releases/
