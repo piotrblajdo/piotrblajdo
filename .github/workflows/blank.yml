@@ -22,6 +22,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Dump branche name
+        run: echo ${{ github.head_ref }}
+
+      - name: Dump branche name1
+        run: cat ${{ github.head_ref }}
+
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"; env
 
