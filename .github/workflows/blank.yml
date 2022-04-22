@@ -54,7 +54,7 @@ jobs:
                 CLONE_DIRECTORY1=$(mktemp -d)
 
       - name: Checkout private tools
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           repository: piotrblajdo/destimation.git
           token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
