@@ -41,6 +41,7 @@ jobs:
             done
             echo "Changed files:"
             cat changes.txt
+
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
 #        run: echo Hello, world!
