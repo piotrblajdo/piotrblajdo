@@ -23,16 +23,30 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Dump event JSON and environment
-        run: cat "$GITHUB_EVENT_PATH"; env
+        run: cat "$GITHUB_EVENT_PATH"
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        -
+      - name: Upload file with changes to releases
+          run: |
+            PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+            mkdir -p releases
+            FILES_COUNT=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER | jq -r '.changed_files')
+            for p in $(seq $(expr $FILES_COUNT / 100 + 1))
+            do
+              URL="https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/files?per_page=100&page=$p"
+              echo "GET: $URL"
+              FILES=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename, .status')
+              echo $FILES | tr " " "\n" >> changes.txt
+            done
+            echo "Changed files:"
+            cat changes.txt
+#      # Runs a single command using the runners shell
+#      - name: Run a one-line script
+#        run: echo Hello, world!
+#
+#      # Runs a set of commands using the runners shell
+#      - name: Run a multi-line script
+#        run: |
+#          echo Add other actions to build,
+#          echo test, and deploy your project.
