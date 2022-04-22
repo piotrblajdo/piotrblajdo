@@ -3,7 +3,7 @@
 
 name: CI
 
-git_user.email = $(piotrblajdo@gmail.com)
+git_user_email: piotrblajdo@gmail.com
 git_user_name = $(piotrblajdo)
 git_dest_token = $(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)
 
