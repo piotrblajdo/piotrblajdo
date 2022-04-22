@@ -58,10 +58,10 @@ jobs:
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://piotrblajdo:${{ inputs.access_token }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
-#        env:
-#          git_user_email: piotrblajdo@gmail.com
-#          git_user_name: piotrblajdo
-#          git_dest_token: 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
+        env:
+          git_user_email: piotrblajdo@gmail.com
+          git_user_name: piotrblajdo
+
 
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
