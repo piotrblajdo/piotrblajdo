@@ -58,7 +58,7 @@ jobs:
         with:
           repository: piotrblajdo/destimation.git
           token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-          path: $CLONE_DIRECTORY
+          path: $CLONE_DIRECTORY1
 
       - name: Clone destmation repository
         run: |
