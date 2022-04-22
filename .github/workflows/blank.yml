@@ -56,12 +56,12 @@ jobs:
             git config --global user.email "$git_user_email"
             git config --global user.name "$git_user_name"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-            git clone "https://username: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@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+            git clone "https://username:${{ secrets.GITHUB_TOKEN }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
-        env:
-          git_user_email: piotrblajdo@gmail.com
-          git_user_name: piotrblajdo
-          git_dest_token: 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
+#        env:
+#          git_user_email: piotrblajdo@gmail.com
+#          git_user_name: piotrblajdo
+#          git_dest_token: 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
 
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
