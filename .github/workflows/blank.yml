@@ -56,7 +56,7 @@ jobs:
             echo "##### Cloning destination Github repository #####"
             # Setup git
             CLONE_DIRECTORY=$(mktemp -d)
-            git clone "https://piotrblajdo:${{ secrets.GITHUB_TOKEN }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+            git clone "https://piotrblajdo:${{ secrets.GITHUB_TOKEN }}@github.com/piotrblajdo/destimation" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
         env:
           git_user_email: piotrblajdo@gmail.com
