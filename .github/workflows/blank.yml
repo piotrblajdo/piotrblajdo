@@ -59,6 +59,7 @@ jobs:
           repository: piotrblajdo/destimation.git
           token: ${{ secrets.GITHUB_TOKEN}} # `GH_PAT` is a secret that contains your PAT
           path: my-tools
+          ref: my-branch
 
       - name: Clone destmation repository
         run: |
