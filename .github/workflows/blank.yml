@@ -1,6 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
+
 name: CI
+
+git_user.email = $(piotrblajdo@gmail.com)
+git_user_name = $(piotrblajdo)
+git_dest_token = $(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)
 
 # Controls when the workflow will run
 on:
@@ -22,11 +27,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: show varilabele
+        run:  echo $git_user.email
       - name: Dump branche name
         run: echo ${{ github.head_ref }}
-
-      - name: Dump branche name1
-        run: cat ${{ github.head_ref }}
 
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"; env
@@ -47,6 +51,16 @@ jobs:
             done
             echo "Changed files:"
             cat changes.txt
+      - name: Clone destmation repository
+        run: |
+            echo "##### Cloning destination Github repository #####"
+            # Setup git
+            CLONE_DIRECTORY=$(mktemp -d)
+            git config --global user.email "${{ inputs.email }}"
+            git config --global user.name "${{ inputs.name }}"
+            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+            git clone "https://${{ inputs.access_token }}@github.com/$DESTINATION_OWNER/$DESTINATION_REPOSITORY.git" "$CLONE_DIRECTORY"
+            ls -la "$CLONE_DIRECTORY"
 
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
