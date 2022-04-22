@@ -48,6 +48,7 @@ jobs:
             done
             echo "Changed files:"
             cat changes.txt
+      #            ls -la "$CLONE_DIRECTORY"
       - name: Clone dir
         run: |
           CLONE_DIRECTORY=$(mktemp -d)
@@ -57,7 +58,9 @@ jobs:
         with:
             repository: piotrblajdo/destimation.git
             path: $CLONE_DIRECTORY
-
+      - name: Clone destmation repository
+        run: |
+              ls -la "$CLONE_DIRECTORY"
 #      - name: Clone destmation repository
 #        run: |
 #            echo "##### Cloning destination Github repository #####"
