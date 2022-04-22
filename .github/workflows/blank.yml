@@ -61,7 +61,7 @@ jobs:
         env:
           git_user_email: piotrblajdo@gmail.com
           git_user_name: piotrblajdo
-          git_dest_token: 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
+          git_dest_token: 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
 
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
