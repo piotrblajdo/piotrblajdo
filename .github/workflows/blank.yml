@@ -64,7 +64,7 @@ jobs:
         run: |
                 CLONE_DIRECTORY1=$(mktemp -d)
 
-     - name: Clone destmation repository
+      - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
             # Setup git
