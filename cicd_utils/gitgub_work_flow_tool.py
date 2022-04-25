@@ -202,8 +202,8 @@ if __name__ == "__main__":
     # parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
     parser.add_argument("--full_name_repo", action="store", dest="full_name_repo", required=True)
     parser.add_argument("--branch", action="store", dest="branch", required=True)
-    # parser.add_argument("--changes_file", action="store", dest="changes_file", required=True,
-    #                     help="Path to file with changes.")
+    parser.add_argument("--changes_file", action="store", dest="changes_file", required=True,
+                        help="Path to file with changes.")
 
     args = parser.parse_args()
     token = os.environ['ACCESS_TOKEN_CLONE']
