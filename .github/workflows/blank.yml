@@ -69,7 +69,8 @@ jobs:
               CLONE_DIRECTORY1=$(mktemp -d)
               echo $CLONE_DIRECTORY1
               echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
-              echo "${{ env.CLONE_DIRECTORY1 }}"
+
+
       - name: Check branch
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
@@ -88,7 +89,7 @@ jobs:
             echo "##### Cloning destination Github repository #####"
             # Setup git
             CLONE_DIRECTORY=$(mktemp -d)
-           
+            echo "CLONE_DIRECTORY=$CLONE_DIRECTORY" >> $GITHUB_ENV
             git config --global user.email "$git_user_email"
             git config --global user.name "$git_user_name"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
@@ -105,7 +106,7 @@ jobs:
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: | 
-          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir ${{ env.CLONE_DIRECTORY }}  --dest_dir ${{ env.CLONE_DIRECTORY }}
+          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir ${{ env.CLONE_DIRECTORY1 }}  --dest_dir ${{ env.CLONE_DIRECTORY }}
 
 
 
