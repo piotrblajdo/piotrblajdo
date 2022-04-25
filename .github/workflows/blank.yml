@@ -67,7 +67,8 @@ jobs:
       - name: Make clone dir
         run: |
               CLONE_DIRECTORY1=$(mktemp -d)
-              echo "CLONE_DIRECTORY1=${{ CLONE_DIRECTORY1 }}" >> $GITHUB_ENV
+              echo $CLONE_DIRECTORY1
+              echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
               echo "${{ env.CLONE_DIRECTORY1 }}"
       - name: Check branch
         env:
