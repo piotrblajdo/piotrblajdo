@@ -28,7 +28,8 @@ jobs:
         env:
           KEYSTORE_BASE64: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: |
-          echo $KEYSTORE_BASE64 | base64 -d 
+          echo ${{ $KEYSTORE_BASE64 }}
+          echo ${{ secrets.ACCESS_TOKEN_CLONE }}
 
       - name: show varilabele
         run:  echo $git_user_email
