@@ -14,16 +14,6 @@ DAG_PATH = 'dags/'
 
 repo_root = ""
 
-def check_branch(token, full_name_repo, branch_name):
-    github = Github(os.environ['ACCESS_TOKEN_CLONE'])
-    repo = github.get_repo(full_name_repo)
-    if branch_name in list(b.name for b in repo.get_branches()):
-        return "True"
-    else:
-        return "False"
-
-# check_branch("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", "piotrblajdo/destimation", "main")
-
 
 # def create_or_checkout_branch(github, token, dest_dir, branch_name):
 #     if check_branch(github, "piotrblajdo/destimation", branch_name):
@@ -98,14 +88,7 @@ def get_changed_files(changed_files_list_location):
 
     df_files = pd.DataFrame(columns=["filename", "status"])
     for f in changed_files_list:
-        if DAG_PATH not in f['filename'] or True:  # TODO
-            file_path = os.path.join(repo_root, f['filename'])
-            try:
-                _ = os.stat(file_path)
-            except FileNotFoundError:
-                print("Can't find file (deleted):", file_path)
-                # continue
-            df_files = df_files.append({"filename": f['filename'],
+        df_files = df_files.append({"filename": f['filename'],
                                        "status": f['status']
                                         }, ignore_index=True)
 
@@ -200,22 +183,13 @@ def get_changed_files(changed_files_list_location):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Deployment to GCS")
     # parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
-    parser.add_argument("--full_name_repo", action="store", dest="full_name_repo", required=True)
-    parser.add_argument("--branch", action="store", dest="branch", required=True)
+    # parser.add_argument("--full_name_repo", action="store", dest="full_name_repo", required=True)
+    # parser.add_argument("--branch", action="store", dest="branch", required=True)
     parser.add_argument("--changes_file", action="store", dest="changes_file", required=True,
                         help="Path to file with changes.")
     parser.add_argument("--source_dir", action="store", dest="source_dir", required=True)
     parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
-
+    
 
     args = parser.parse_args()
-    token = os.environ['ACCESS_TOKEN_CLONE']
-    print(token)
-    github = Github(token)
-    full_name_repo = "piotrblajdo/destimation"
-    MY_VALUE = check_branch(token, args.full_name_repo, args.branch)
-    env_file = os.getenv('GITHUB_ENV')
-    with open(env_file, "a") as myfile:
-        myfile.write(f"CHECK_BRANCH={MY_VALUE}")
-
     df_files = get_changed_files(args.changes_file)
