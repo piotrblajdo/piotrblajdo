@@ -35,8 +35,6 @@ jobs:
         run: |
           echo ${{ secrets.ACCESS_TOKEN_CLONE }}
 
-      - name: show varilabele
-        run:  echo $git_user_email
       - name: Dump branche name
         run: echo ${{ github.head_ref }}
 
@@ -72,7 +70,7 @@ jobs:
             git config --global user.email "$git_user_email"
             git config --global user.name "$git_user_name"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
-            git clone "https://piotrblajdo:${{ env.WHO_TO_TRUST }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+            git clone "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             ls -la "$CLONE_DIRECTORY"
         env:
           git_user_email: piotrblajdo@gmail.com
