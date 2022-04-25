@@ -69,7 +69,7 @@ jobs:
               CLONE_DIRECTORY1=$(mktemp -d)
       - name: Check branch
         run: | 
-          python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --token ${{ secrets.ACCESS_TOKEN_CLONE }} --branch ${{ github.head_ref }}
+          python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --branch ${{ github.head_ref }}
           echo ${{ env.CHECK_BRANCH }}
       - name: Clone destmation repository
         run: |

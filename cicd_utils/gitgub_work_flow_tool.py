@@ -207,7 +207,6 @@ def get_changed_files(changed_files_list_location):
 #
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Deployment to GCS")
-    parser.add_argument("--token", action="store", dest="token", required=True)
     # parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
     parser.add_argument("--full_name_repo", action="store", dest="full_name_repo", required=True)
     parser.add_argument("--branch", action="store", dest="branch", required=True)
@@ -215,8 +214,9 @@ if __name__ == "__main__":
     #                     help="Path to file with changes.")
 
     args = parser.parse_args()
-
-    github = Github(args.token)
+    token = os.getenv('ACCESS_TOKEN_CLONE')
+    print(token)
+    github = Github(token)
     full_name_repo = "piotrblajdo/destimation"
     MY_VALUE = check_branch(github, args.full_name_repo, args.branch)
     env_file = os.getenv('GITHUB_ENV')
