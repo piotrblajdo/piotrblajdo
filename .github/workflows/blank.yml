@@ -70,9 +70,7 @@ jobs:
       - name: Check branch
         run: | 
           python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --token ${{ secrets.ACCESS_TOKEN_CLONE }} --branch ${{ github.head_ref }}
-
-
-        echo "{environment_variable_name}={value}" >> $GITHUB_ENV
+          echo ${{ env.CHECK_BRANCH }}
       - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
