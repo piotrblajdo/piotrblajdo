@@ -109,7 +109,7 @@ def get_changed_files(changed_files_list_location):
                                        "status": f['status']
                                         }, ignore_index=True)
 
-    df_files.show()
+    print(df_files)
     return df_files
 #
 # def sync_files(df, gcs_composer_bucket, dry_run=True):
