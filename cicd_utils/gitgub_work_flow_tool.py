@@ -15,14 +15,14 @@ DAG_PATH = 'dags/'
 repo_root = ""
 
 def check_branch(token, full_name_repo, branch_name):
-    github = Github(os.environ['ACCESS_TOKEN_CLONE'])
+    github = Github(token)
     repo = github.get_repo(full_name_repo)
     if branch_name in list(b.name for b in repo.get_branches()):
         return "True"
     else:
         return "False"
 
-# check_branch("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", "piotrblajdo/destimation", "main")
+check_branch("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", "piotrblajdo/destimation", "main")
 
 # def create_or_checkout_branch(github, token, dest_dir, branch_name):
 #     if check_branch(github, "piotrblajdo/destimation", branch_name):
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     print(token)
     github = Github(token)
     full_name_repo = "piotrblajdo/destimation"
-    MY_VALUE = check_branch(github, args.full_name_repo, args.branch)
+    MY_VALUE = check_branch(token, args.full_name_repo, args.branch)
     env_file = os.getenv('GITHUB_ENV')
     with open(env_file, "a") as myfile:
         myfile.write(f"CHECK_BRANCH={MY_VALUE}")
