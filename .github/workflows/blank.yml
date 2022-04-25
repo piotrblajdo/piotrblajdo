@@ -87,7 +87,7 @@ jobs:
             echo "##### Cloning destination Github repository #####"
             # Setup git
             CLONE_DIRECTORY=$(mktemp -d)
-            echo "CLONE_DIRECTORY="$CLONE_DIRECTORY" >> $GITHUB_ENV
+            echo "CLONE_DIRECTORY=$CLONE_DIRECTORY" >> $GITHUB_ENV
             git config --global user.email "$git_user_email"
             git config --global user.name "$git_user_name"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
