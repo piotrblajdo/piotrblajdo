@@ -73,6 +73,14 @@ jobs:
         run: | 
           python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --branch ${{ github.head_ref }}
           echo ${{ env.CHECK_BRANCH }}
+        
+
+      - name: Check - CHECK_BRANCH state
+        if: env.WHO_TO_TRUST == 'False'
+        run: | 
+            echo "clone clone clone clone clone clone "
+          
+
       - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
