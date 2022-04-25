@@ -24,6 +24,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Get secret from base64
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ACCESS_TOKEN_CLONE }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 -d 
+
       - name: show varilabele
         run:  echo $git_user_email
       - name: Dump branche name
