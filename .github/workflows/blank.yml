@@ -58,16 +58,15 @@ jobs:
             echo "Changed files:"
             cat changes.txt
 
-       - name: Install packages
+      - name: Install packages
         run: |
           curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
           python3 get-pip.py
           python3 -m pip install -r cicd_utils/requirements.txt
-          
 
       - name: Make clone dir
         run: |
-                CLONE_DIRECTORY1=$(mktemp -d)
+              CLONE_DIRECTORY1=$(mktemp -d)
       - name: Clone destmation repository
         run: |
             echo "##### Cloning destination Github repository #####"
