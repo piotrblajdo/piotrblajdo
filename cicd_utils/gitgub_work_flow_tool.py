@@ -110,6 +110,7 @@ def get_changed_files(changed_files_list_location):
                                         }, ignore_index=True)
 
     df_files.show()
+    return df_files
 #
 # def sync_files(df, gcs_composer_bucket, dry_run=True):
 #     """Synchronizes files from local (GIT) to the remote (GCS) by uploading changed files to GCS
@@ -214,5 +215,4 @@ if __name__ == "__main__":
     with open(env_file, "a") as myfile:
         myfile.write(f"CHECK_BRANCH={MY_VALUE}")
 
-
-    df_files, df_folders = get_changed_files(args.changes_file)
+    df_files = get_changed_files(args.changes_file)
