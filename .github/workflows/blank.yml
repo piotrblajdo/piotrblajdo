@@ -76,7 +76,7 @@ jobs:
         
 
       - name: Check - CHECK_BRANCH state
-        if: env.WHO_TO_TRUST == 'False'
+        if: env.CHECK_BRANCH == 'False'
         run: | 
             echo "clone clone clone clone clone clone "
           
