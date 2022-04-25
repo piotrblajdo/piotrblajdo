@@ -67,6 +67,7 @@ jobs:
       - name: Make clone dir
         run: |
               CLONE_DIRECTORY1=$(mktemp -d)
+
       - name: Check branch
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
@@ -74,14 +75,13 @@ jobs:
           python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --branch ${{ github.head_ref }}
           echo ${{ env.CHECK_BRANCH }}
         
-
-      - name: Check - CHECK_BRANCH state
+      - name: Check exists branch
         if: env.CHECK_BRANCH == 'False'
         run: | 
             echo "clone clone clone clone clone clone "
-          
 
       - name: Clone destmation repository
+        if: env.CHECK_BRANCH == 'False'
         run: |
             echo "##### Cloning destination Github repository #####"
             # Setup git
@@ -90,10 +90,14 @@ jobs:
             git config --global user.name "$git_user_name"
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
-            ls -la "$CLONE_DIRECTORY"
+            cd "$CLONE_DIRECTORY"
+            git checkout -b  "${{ github.head_ref }}"
+            ls -la 
+
         env:
           git_user_email: piotrblajdo@gmail.com
           git_user_name: piotrblajdo
+
 
 
 
