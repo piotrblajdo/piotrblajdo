@@ -28,7 +28,6 @@ jobs:
         env:
           KEYSTORE_BASE64: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: |
-          echo ${{ $KEYSTORE_BASE64 }}
           echo ${{ secrets.ACCESS_TOKEN_CLONE }}
 
       - name: show varilabele
