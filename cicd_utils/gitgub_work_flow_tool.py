@@ -15,7 +15,7 @@ DAG_PATH = 'dags/'
 repo_root = ""
 
 def check_branch(token, full_name_repo, branch_name):
-    github = Github(token)
+    github = Github(os.environ['ACCESS_TOKEN_CLONE'])
     repo = github.get_repo(full_name_repo)
     if branch_name in list(b.name for b in repo.get_branches()):
         return "True"
