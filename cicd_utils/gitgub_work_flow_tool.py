@@ -204,9 +204,6 @@ if __name__ == "__main__":
     parser.add_argument("--branch", action="store", dest="branch", required=True)
     parser.add_argument("--changes_file", action="store", dest="changes_file", required=True,
                         help="Path to file with changes.")
-    parser.add_argument("--source_dir", action="store", dest="source_dir", required=True)
-    parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
-
 
     args = parser.parse_args()
     token = os.environ['ACCESS_TOKEN_CLONE']
@@ -218,4 +215,4 @@ if __name__ == "__main__":
     with open(env_file, "a") as myfile:
         myfile.write(f"CHECK_BRANCH={MY_VALUE}")
 
-    df_files = get_changed_files(args.changes_file)
+    # df_files = get_changed_files(args.changes_file)
