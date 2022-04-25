@@ -5,8 +5,6 @@ Deploying only folders "dags" and "plugins".
 
 import argparse
 import os
-import subprocess
-from google.cloud import storage
 import pandas as pd
 from github import Github
 
