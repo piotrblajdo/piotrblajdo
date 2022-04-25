@@ -28,7 +28,8 @@ jobs:
         env:
           WHO_TO_TRUST: ${{ secrets.ACCESS_TOKEN_CLONE }}
         if: env.WHO_TO_TRUST != 'TrustNo1'
-        run: echo "I know what the secret token is!"
+        run: | 
+          echo env.WHO_TO_TRUST
 
       - name: Get secret from base64
         run: |
