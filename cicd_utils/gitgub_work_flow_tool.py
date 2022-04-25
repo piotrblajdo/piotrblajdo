@@ -96,7 +96,7 @@ def get_changed_files(changed_files_list_location):
     #         foldername = DAG_PATH + file['filename'].split('/')[3]
     #         changed_dag_set.add(foldername)
 
-    df_files = pd.DataFrame(columns=["filename", "type", "full_path", "path", "modification_date"])
+    df_files = pd.DataFrame(columns=["filename", "status"])
     for f in changed_files_list:
         if DAG_PATH not in f['filename'] or True:  # TODO
             file_path = os.path.join(repo_root, f['filename'])
@@ -106,20 +106,10 @@ def get_changed_files(changed_files_list_location):
                 print("Can't find file (deleted):", file_path)
                 # continue
             df_files = df_files.append({"filename": f['filename'],
-                                        "type": "file",
-                                        "full_path": file_path,
-                                        "path": file_path.split('/composer/')[-1],
-                                        "status": f['status']
+                                       "status": f['status']
                                         }, ignore_index=True)
 
-    df_folders = pd.DataFrame(columns=["foldername", "type"])
-    # for f in changed_dag_set:
-    #     df_folders = df_folders.append({"foldername": f,
-    #                     "type": "folder"
-    #                     }, ignore_index=True)
-    return df_files, df_folders
-
-
+    df_files.show()
 #
 # def sync_files(df, gcs_composer_bucket, dry_run=True):
 #     """Synchronizes files from local (GIT) to the remote (GCS) by uploading changed files to GCS
@@ -225,4 +215,4 @@ if __name__ == "__main__":
         myfile.write(f"CHECK_BRANCH={MY_VALUE}")
 
 
-    # df_files, df_folders = get_changed_files(args.changes_file)
+    df_files, df_folders = get_changed_files(args.changes_file)
