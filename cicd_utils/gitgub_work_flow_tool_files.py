@@ -192,4 +192,6 @@ if __name__ == "__main__":
     
 
     args = parser.parse_args()
+    print(args.source_dir)
+    print(args.dest_dir)
     df_files = get_changed_files(args.changes_file)
