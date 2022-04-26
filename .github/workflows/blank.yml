@@ -86,7 +86,7 @@ jobs:
             echo "clone clone clone clone clone clone "
 
       - name: Clone destmation repository
-#        if: env.CHECK_BRANCH == 'False'
+        if: env.CHECK_BRANCH == 'False'
         run: |
             echo "##### Cloning destination Github repository #####"
             # Setup git
@@ -97,8 +97,26 @@ jobs:
             git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
             git clone "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
             cd "$CLONE_DIRECTORY"
-            git checkout -b  "${{ github.head_ref }}"
-            ls -la 
+            git checkout -b  "${{ github.head_ref }}" HEAD
+            ls
+
+        env:
+          git_user_email: piotrblajdo@gmail.com
+          git_user_name: piotrblajdo
+
+      - name: Clone destmation repository exists branch
+        if: env.CHECK_BRANCH == 'True'
+        run: |
+          echo "##### Cloning destination Github repository #####"
+          # Setup git
+          CLONE_DIRECTORY=$(mktemp -d)
+          echo "CLONE_DIRECTORY=$CLONE_DIRECTORY" >> $GITHUB_ENV
+          git config --global user.email "$git_user_email"
+          git config --global user.name "$git_user_name"
+          git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+          git clone -b "${{ github.head_ref }}"  "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+          cd "$CLONE_DIRECTORY"
+          ls
 
         env:
           git_user_email: piotrblajdo@gmail.com

@@ -72,7 +72,7 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
     cmd_commit = f'cd {dest_dir} && git commit -m "{datetime.now()} - {branch_name}"'
     cmd_add_result = subprocess.check_output(cmd_commit, shell=True)
 
-    cmd_push = f'cd {dest_dir} && git push origin {branch_name}'
+    cmd_push = f'cd {dest_dir} && git push  origin {branch_name}'
     cmd_add_result = subprocess.check_output(cmd_push, shell=True)
     print(cmd_add_result)
 
