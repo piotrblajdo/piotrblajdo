@@ -9,7 +9,7 @@ import pandas as pd
 from github import Github
 import subprocess
 from datetime import datetime
-
+import shutil
 FILE_EXCLUSIONS = ["/__pycache__/"]
 COMPOSER_COMPONENT_DIR = ["dags"]
 DAG_PATH = 'dags/'
@@ -90,18 +90,24 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
         df_files = pd.concat([df_files, df], ignore_index=True, axis=0)
 
     for index, row in df_files.iterrows():
+        dest_path = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
         filename = row["filename"]
-        l_filename = filename.split("/")
-
         if os.path.isdir(filename):
             continue
-        dest_path = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
+        l_filename = filename.split("/")
         dest_file = f"{dest_dir}/{dest_path}/{l_filename[-2]}/{l_filename[-1]}"
+        dest_dir = os.path.dirname(f"{dest_dir}/{dest_path}/{l_filename[-2]}")
+
+
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+
         print(filename)
         print(dest_file)
-        cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_file}"
+        print(dest_dir)
+        cp_cmd = f" cd {source_dir}  &&  cp {filename} {dest_file}"
         cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
-
+        print(cp_cmd_result)
         cmd = f"stat {dest_file}"
         cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
