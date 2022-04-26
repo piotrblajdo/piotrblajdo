@@ -91,6 +91,8 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
 
     for index, row in df_files.iterrows():
         filename = row["filename"]
+        if os.path.isdir(filename):
+            continue
         dest_path = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
         dest_file = f"{dest_dir}/{dest_path}/{filename[-2]}/{filename[-1]}"
         print(filename)
