@@ -102,6 +102,10 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir):
         cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
 
+        cmd_add = f" cd {dest_dir}  &&  git add {filename}"
+        cmd_add_result = subprocess.check_output(cmd_add, shell=True)
+        print(cmd_add_result)
+
     print(df_files)
     return df_files
 #
