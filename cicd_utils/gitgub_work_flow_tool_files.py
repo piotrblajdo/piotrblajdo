@@ -98,6 +98,8 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir):
         filename = row["filename"]
         cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_dir}/"
         cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
+        cmd = f"stat {dest_dir}/.github/workflows/blank.yml"
+        cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
 
     print(df_files)
