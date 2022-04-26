@@ -42,8 +42,6 @@ jobs:
         run: cat "$GITHUB_EVENT_PATH"; env
 
       - uses: actions/checkout@v3
-        with:
-            path: my-tools
 
       - name: Upload file with changes to releases
         run: |
