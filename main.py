@@ -1,16 +1,4 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+str = "user/bdu/data_quality/test_2/test_1.sql"
+dest = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
+a_str = str.split("/")
+print(f"{dest}/{a_str[-2]}/{a_str[-1]}")

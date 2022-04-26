@@ -8,6 +8,7 @@ import os
 import pandas as pd
 from github import Github
 import subprocess
+from datetime import datetime
 
 FILE_EXCLUSIONS = ["/__pycache__/"]
 COMPOSER_COMPONENT_DIR = ["dags"]
@@ -81,12 +82,6 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
         changed_files_list = [{'filename': x[0], 'status': x[1]} for x in
                               zip(raw_files_list[::2], raw_files_list[1::2])]
 
-    # changed_dag_set = set()
-    # for file in changed_files_list:
-    #     if DAG_PATH in file['filename']:
-    #         foldername = DAG_PATH + file['filename'].split('/')[3]
-    #         changed_dag_set.add(foldername)
-
     df_files = pd.DataFrame(columns=["filename", "status"])
     for f in changed_files_list:
         filename = f['filename']
@@ -96,18 +91,20 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
 
     for index, row in df_files.iterrows():
         filename = row["filename"]
-        cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_dir}/"
+        dest_path = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
+        dest_file = f"{filename} {dest_dir}/{dest_path}/{filename[-2]}/{filename[-1]}"
+        cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_file}"
         cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
 
-        cmd = f"stat {dest_dir}/.github/workflows/blank.yml"
+        cmd = f"stat {dest_file}"
         cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
 
-        cmd_add = f" cd {dest_dir}  &&  git add {filename}"
+        cmd_add = f" cd {dest_dir}  &&  git add {dest_file}"
         cmd_add_result = subprocess.check_output(cmd_add, shell=True)
         print(cmd_add_result)
 
-    cmd_commit = f'cd {dest_dir} && git commit -m "added definition of v_new_auth_view_fct in f_pampers_hub for automatic validation"'
+    cmd_commit = f'cd {dest_dir} && git commit -m "{datetime.now()} - {branch_name}"'
     cmd_add_result = subprocess.check_output(cmd_commit, shell=True)
 
     cmd_push = f'cd {dest_dir} && git push origin {branch_name}'
