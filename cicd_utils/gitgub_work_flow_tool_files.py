@@ -98,13 +98,12 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
         dest_file = f"{dest_dir}/{dest_path}/{l_filename[-2]}/{l_filename[-1]}"
         dest_dir = os.path.dirname(f"{dest_dir}/{dest_path}/{l_filename[-2]}")
 
-
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
 
-        print(filename)
+        print(f"------------------------------{filename}")
         print(dest_file)
-        print(dest_dir)
+        print(f"-----------------{dest_dir}/{dest_path}/{l_filename[-2]}")
         cp_cmd = f" cd {source_dir}  &&  cp {filename} {dest_file}"
         cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
         print(cp_cmd_result)
