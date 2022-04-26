@@ -9,7 +9,7 @@ import pandas as pd
 from github import Github
 import subprocess
 from datetime import datetime
-
+import shutil
 FILE_EXCLUSIONS = ["/__pycache__/"]
 COMPOSER_COMPONENT_DIR = ["dags"]
 DAG_PATH = 'dags/'
@@ -90,12 +90,26 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
         df_files = pd.concat([df_files, df], ignore_index=True, axis=0)
 
     for index, row in df_files.iterrows():
-        filename = row["filename"]
         dest_path = "dags/wkf_data_quality/templates/end_user_tests/data_quality_bdu"
-        dest_file = f"{filename} {dest_dir}/{dest_path}/{filename[-2]}/{filename[-1]}"
-        cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_file}"
-        cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
+        filename = row["filename"]
+        if os.path.isdir(filename):
+            continue
+        l_filename = filename.split("/")
+        dest_file = f"{dest_dir}/{dest_path}/{l_filename[-2]}/{l_filename[-1]}"
 
+
+        if not os.path.exists(os.path.dirname(dest_file)):
+            os.makedirs(os.path.dirname(dest_file))
+        if os.path.exists(os.path.dirname(dest_file)):
+            print(f"-----------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        shutil.copy(f"{source_dir}/{filename}", dest_file)
+
+        print(f"------------------------------{filename}")
+        print(dest_file)
+        print(f"-----------------{dest_dir}/{dest_path}/{l_filename[-2]}")
+        cp_cmd = f" cd {source_dir}  &&  cp {filename} {dest_file}"
+        cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
+        print(cp_cmd_result)
         cmd = f"stat {dest_file}"
         cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
