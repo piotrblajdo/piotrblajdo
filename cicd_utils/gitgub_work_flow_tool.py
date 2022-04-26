@@ -105,7 +105,7 @@ def get_changed_files(changed_files_list_location):
             except FileNotFoundError:
                 print("Can't find file (deleted):", file_path)
                 # continue
-            df_files = df_files.concat({"filename": f['filename'],
+            df_files = df_files.concat ({"filename": f['filename'],
                                        "status": f['status']
                                         }, ignore_index=True)
 

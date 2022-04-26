@@ -3,14 +3,13 @@
 
 name: CI
 
-
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -106,7 +105,7 @@ jobs:
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: | 
-          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir "/home/runner/work/${{ github.repository }}"  --dest_dir ${{ env.CLONE_DIRECTORY }} --branch_name  ${{ github.head_ref }}
+          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --branch_name  ${{ github.head_ref }} --source_dir "/home/runner/work/${{ github.repository }}" --dest_dir "${{ env.CLONE_DIRECTORY }}" 
 
 
 
