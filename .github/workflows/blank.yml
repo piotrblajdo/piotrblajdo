@@ -107,7 +107,7 @@ jobs:
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: | 
-          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir "/home/runner/work/${{ github.repository }}"  --dest_dir ${{ env.CLONE_DIRECTORY }}
+          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir ${{ env.CLONE_DIRECTORY1 }}  --dest_dir ${{ env.CLONE_DIRECTORY }}
 
 
 
