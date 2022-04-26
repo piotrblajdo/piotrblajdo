@@ -102,7 +102,7 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
             os.makedirs(os.path.dirname(dest_file))
         if os.path.exists(os.path.dirname(dest_file)):
             print(f"-----------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-
+        shutil.copy(filename, dest_file)
         print(f"------------------------------{filename}")
         print(dest_file)
         print(f"-----------------{dest_dir}/{dest_path}/{l_filename[-2]}")
