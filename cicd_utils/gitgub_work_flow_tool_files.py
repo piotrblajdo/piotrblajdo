@@ -96,10 +96,10 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_
             continue
         l_filename = filename.split("/")
         dest_file = f"{dest_dir}/{dest_path}/{l_filename[-2]}/{l_filename[-1]}"
-        dest_dir = os.path.dirname(f"{dest_dir}/{dest_path}/{l_filename[-2]}")
+        dest_folder = os.path.dirname(f"{dest_dir}/{dest_path}/{l_filename[-2]}")
 
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
+        if not os.path.exists(dest_folder):
+            os.makedirs(dest_folder)
 
         print(f"------------------------------{filename}")
         print(dest_file)
