@@ -7,6 +7,7 @@ import argparse
 import os
 import pandas as pd
 from github import Github
+import subprocess
 
 FILE_EXCLUSIONS = ["/__pycache__/"]
 COMPOSER_COMPONENT_DIR = ["dags"]
@@ -57,7 +58,7 @@ repo_root = ""
 #         repo.create_file(file_name, 'commit', file_content)
 
 
-def get_changed_files(changed_files_list_location):
+def get_changed_files(changed_files_list_location, source_dir, dest_dir):
     """Get list of files to upload.
 
     Reads content of /home/runner/work/changed_files.txt,
@@ -91,11 +92,13 @@ def get_changed_files(changed_files_list_location):
         filename = f['filename']
         status = f['status']
         df = pd.DataFrame({"filename" : [filename], "status": [status]})
-        # df2 = pd.DataFrame({'First Name': ['Kumar'],
-        #                     'Last Name': ['Ram'],
-        #                     'Country': ['India']})
-
         df_files = pd.concat([df_files, df], ignore_index=True, axis=0)
+
+    for index, row in df_files.iterrows():
+        filename = row["filename"]
+        cp_cmd = f" cd source_dir  &&  cp --parents  {filename} {dest_dir}/"
+        foldersList = subprocess.check_output(cp_cmd, shell=True)
+
 
     print(df_files)
     return df_files
