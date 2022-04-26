@@ -1,6 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 
+
 name: CI
+
 
 # Controls when the workflow will run
 on:
@@ -22,6 +24,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Step 2 - GitHub Action if statement (true)
+        env:
+          ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
+        if: env.WHO_TO_TRUST != 'TrustNo1'
+        run: | 
+          echo ${{ env.WHO_TO_TRUST }}
+
+      - name: Get secret from base64
+        run: |
+          echo ${{ secrets.ACCESS_TOKEN_CLONE }}
+
+      - name: Dump branche name
+        run: echo ${{ github.head_ref }}
+
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"; env
 
@@ -42,6 +58,60 @@ jobs:
             echo "Changed files:"
             cat changes.txt
 
+      - name: Install packages
+        run: |
+          curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
+          python3 get-pip.py
+          python3 -m pip install -r cicd_utils/requirements.txt
+
+      - name: Make clone dir
+        run: |
+              CLONE_DIRECTORY1=$(mktemp -d)
+              echo $CLONE_DIRECTORY1
+              echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
+
+
+      - name: Check branch
+        env:
+          ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
+        run: | 
+          python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --branch ${{ github.head_ref }} --changes_file=changes.txt
+          echo ${{ env.CHECK_BRANCH }}
+        
+      - name: Check exists branch
+        if: env.CHECK_BRANCH == 'False'
+        run: | 
+            echo "clone clone clone clone clone clone "
+
+      - name: Clone destmation repository
+        if: env.CHECK_BRANCH == 'False'
+        run: |
+            echo "##### Cloning destination Github repository #####"
+            # Setup git
+            CLONE_DIRECTORY=$(mktemp -d)
+            echo "CLONE_DIRECTORY=$CLONE_DIRECTORY" >> $GITHUB_ENV
+            git config --global user.email "$git_user_email"
+            git config --global user.name "$git_user_name"
+            git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+            git clone "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "$CLONE_DIRECTORY"
+            cd "$CLONE_DIRECTORY"
+            git checkout -b  "${{ github.head_ref }}"
+            ls -la 
+
+        env:
+          git_user_email: piotrblajdo@gmail.com
+          git_user_name: piotrblajdo
+
+      - name: Check branch
+        env:
+          ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
+        run: | 
+          python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir "/home/runner/work/${{ github.repository }}"  --dest_dir ${{ env.CLONE_DIRECTORY }} --branch_name  ${{ github.head_ref }}
+
+
+
+
+
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
 #        run: echo Hello, world!
@@ -51,3 +121,12 @@ jobs:
 #        run: |
 #          echo Add other actions to build,
 #          echo test, and deploy your project.
+
+#      - name: Checkout private tools
+#        uses: actions/checkout@v3
+#        with:
+#          repository: piotrblajdo/destimation
+#          token: ${{ env.WHO_TO_TRUST }} # `GH_PAT` is a secret that contains your PAT
+#          path: my-tools
+#          ref: main
+
