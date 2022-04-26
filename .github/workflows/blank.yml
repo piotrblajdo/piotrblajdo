@@ -75,7 +75,7 @@ jobs:
         env:
           ACCESS_TOKEN_CLONE: ${{ secrets.ACCESS_TOKEN_CLONE }}
         run: | 
-          python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "${{ github.repository }}" --branch ${{ github.head_ref }} --changes_file=changes.txt
+          python3 cicd_utils/gitgub_work_flow_tool.py --full_name_repo "piotrblajdo/destimation" --branch ${{ github.head_ref }} --changes_file=changes.txt
           echo ${{ env.CHECK_BRANCH }}
         
       - name: Check exists branch
@@ -97,7 +97,6 @@ jobs:
             cd "$CLONE_DIRECTORY"
             git checkout -b  "${{ github.head_ref }}"
             ls -la 
-            pwd 
 
         env:
           git_user_email: piotrblajdo@gmail.com
