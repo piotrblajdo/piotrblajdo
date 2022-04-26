@@ -86,7 +86,7 @@ jobs:
             echo "clone clone clone clone clone clone "
 
       - name: Clone destmation repository
-        if: env.CHECK_BRANCH == 'False'
+#        if: env.CHECK_BRANCH == 'False'
         run: |
             echo "##### Cloning destination Github repository #####"
             # Setup git
