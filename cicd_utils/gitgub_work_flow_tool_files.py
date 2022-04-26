@@ -90,7 +90,7 @@ def get_changed_files(changed_files_list_location):
     for f in changed_files_list:
         df = pd.DataFrame({"filename": f['filename'],
                                        "status": f['status']
-                                        }, ignore_index=True)
+                                        })
         df_files = pd.concat([df_files, df], ignore_index=True, axis=0)
 
     print(df_files)
