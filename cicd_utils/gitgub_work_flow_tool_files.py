@@ -88,9 +88,13 @@ def get_changed_files(changed_files_list_location):
 
     df_files = pd.DataFrame(columns=["filename", "status"])
     for f in changed_files_list:
-        df = pd.DataFrame({"filename": f['filename'],
-                                       "status": f['status']
-                                        })
+        filename = f['filename']
+        status = f['status']
+        df = pd.DataFrame({"filename" : [filename], "status": [status]})
+        # df2 = pd.DataFrame({'First Name': ['Kumar'],
+        #                     'Last Name': ['Ram'],
+        #                     'Country': ['India']})
+
         df_files = pd.concat([df_files, df], ignore_index=True, axis=0)
 
     print(df_files)
