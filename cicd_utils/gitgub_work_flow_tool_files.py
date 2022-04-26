@@ -58,7 +58,7 @@ repo_root = ""
 #         repo.create_file(file_name, 'commit', file_content)
 
 
-def get_changed_files(changed_files_list_location, source_dir, dest_dir):
+def get_changed_files(changed_files_list_location, source_dir, dest_dir, branch_name):
     """Get list of files to upload.
 
     Reads content of /home/runner/work/changed_files.txt,
@@ -98,6 +98,7 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir):
         filename = row["filename"]
         cp_cmd = f" cd {source_dir}  &&  cp --parents  {filename} {dest_dir}/"
         cp_cmd_result = subprocess.check_output(cp_cmd, shell=True)
+
         cmd = f"stat {dest_dir}/.github/workflows/blank.yml"
         cp_cmd_result = subprocess.check_output(cmd, shell=True)
         print(cp_cmd_result)
@@ -106,6 +107,15 @@ def get_changed_files(changed_files_list_location, source_dir, dest_dir):
         cmd_add_result = subprocess.check_output(cmd_add, shell=True)
         print(cmd_add_result)
 
+    cmd_commit = f'cd {dest_dir} && git commit -m "added definition of v_new_auth_view_fct in f_pampers_hub for automatic validation"'
+    cmd_add_result = subprocess.check_output(cmd_commit, shell=True)
+
+    cmd_push = f'cd {dest_dir} && git push origin {branch_name}'
+    cmd_add_result = subprocess.check_output(cmd_push, shell=True)
+    print(cmd_add_result)
+
+
+    branch_name
     print(df_files)
     return df_files
 #
@@ -198,14 +208,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Deployment to GCS")
     # parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
     # parser.add_argument("--full_name_repo", action="store", dest="full_name_repo", required=True)
-    # parser.add_argument("--branch", action="store", dest="branch", required=True)
+
     parser.add_argument("--changes_file", action="store", dest="changes_file", required=True,
                         help="Path to file with changes.")
     parser.add_argument("--source_dir", action="store", dest="source_dir", required=True)
     parser.add_argument("--dest_dir", action="store", dest="dest_dir", required=True)
-    
+    parser.add_argument("--branch_name", action="store", dest="branch_name", required=True)
+
 
     args = parser.parse_args()
     print(args.source_dir)
     print(args.dest_dir)
-    df_files = get_changed_files(args.changes_file, args.source_dir, args.dest_dir)
+    print(args.branch_name)
+
+    df_files = get_changed_files(args.changes_file, args.source_dir, args.dest_dir, args.branch_name)
