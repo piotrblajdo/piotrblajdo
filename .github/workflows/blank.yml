@@ -41,15 +41,9 @@ jobs:
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"; env
 
-      - name: Make clone dir
-        run: |
-            CLONE_DIRECTORY1=$(mktemp -d)
-            echo $CLONE_DIRECTORY1
-            echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
-
       - uses: actions/checkout@v3
         with:
-            path: ${{ env.CLONE_DIRECTORY1 }}
+            path: my-tools
 
       - name: Upload file with changes to releases
         run: |
@@ -70,7 +64,13 @@ jobs:
         run: |
           curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
           python3 get-pip.py
-          python3 -m pip install -r ${{ env.CLONE_DIRECTORY1 }}/cicd_utils/requirements.txt
+          python3 -m pip install -r cicd_utils/requirements.txt
+
+      - name: Make clone dir
+        run: |
+              CLONE_DIRECTORY1=$(mktemp -d)
+              echo $CLONE_DIRECTORY1
+              echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
 
 
       - name: Check branch
@@ -99,6 +99,7 @@ jobs:
             cd "$CLONE_DIRECTORY"
             git checkout -b  "${{ github.head_ref }}"
             ls -la 
+            pwd 
 
         env:
           git_user_email: piotrblajdo@gmail.com
