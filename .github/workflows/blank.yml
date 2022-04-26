@@ -41,7 +41,15 @@ jobs:
       - name: Dump event JSON and environment
         run: cat "$GITHUB_EVENT_PATH"; env
 
+      - name: Make clone dir
+        run: |
+            CLONE_DIRECTORY1=$(mktemp -d)
+            echo $CLONE_DIRECTORY1
+            echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
+
       - uses: actions/checkout@v3
+        with:
+            path: my-tools
 
       - name: Upload file with changes to releases
         run: |
@@ -64,11 +72,7 @@ jobs:
           python3 get-pip.py
           python3 -m pip install -r cicd_utils/requirements.txt
 
-      - name: Make clone dir
-        run: |
-              CLONE_DIRECTORY1=$(mktemp -d)
-              echo $CLONE_DIRECTORY1
-              echo "CLONE_DIRECTORY1=$CLONE_DIRECTORY1" >> $GITHUB_ENV
+    
 
 
       - name: Check branch
