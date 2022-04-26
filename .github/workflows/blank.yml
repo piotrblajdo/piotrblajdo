@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/checkout@v3
         with:
-            path: my-tools
+            path: ${{ env.CLONE_DIRECTORY1 }}
 
       - name: Upload file with changes to releases
         run: |
@@ -70,9 +70,7 @@ jobs:
         run: |
           curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
           python3 get-pip.py
-          python3 -m pip install -r cicd_utils/requirements.txt
-
-    
+          python3 -m pip install -r ${{ env.CLONE_DIRECTORY1 }}/cicd_utils/requirements.txt
 
 
       - name: Check branch
