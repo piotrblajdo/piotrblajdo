@@ -1,1 +1,1 @@
-select * FROM
+select * FROM djsakjsahdlkh lk
