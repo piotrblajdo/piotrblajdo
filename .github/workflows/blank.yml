@@ -36,6 +36,7 @@ jobs:
       - name: Get secret from base64
         run: |
           echo ${{ secrets.ACCESS_TOKEN_CLONE }}
+          git request-pull pr_test_001 https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git main
 
       - name: Dump branche name
         run: echo ${{ github.head_ref }}
