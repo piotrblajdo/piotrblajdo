@@ -129,7 +129,8 @@ jobs:
           git_user_name: piotrblajdo
         run: | 
           python3 cicd_utils/gitgub_work_flow_tool_files.py --changes_file=changes.txt --source_dir "/home/runner/work/${{ github.repository }}"  --dest_dir "${{ env.CLONE_DIRECTORY }}" --branch_name "${{ github.head_ref }}"
-          git request-pull "${{ github.head_ref }}" "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" main:${{ github.head_ref }}
+          cd "$env.CLONE_DIRECTORY"
+          git request-pull "${{ github.head_ref }}" "https://piotrblajdo:${{ secrets.ACCESS_TOKEN_CLONE }}@github.com/piotrblajdo/destimation.git" "main"
       
          
 #      # Runs a single command using the runners shell
